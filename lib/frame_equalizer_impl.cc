@@ -242,15 +242,17 @@ frame_equalizer_impl::decode_signal_field(uint8_t *rx_bits) {
 	static ofdm_param ofdm(BPSK_1_2);
 	static frame_param frame(ofdm, 0);
 
-	deinterleave(rx_bits);
-	uint8_t *decoded_bits = d_decoder.decode(&ofdm, &frame, d_deinterleaved);
+	//deinterleave(rx_bits);
+	interleave((char*)rx_bits,  (char*)d_deinterleaved, frame, ofdm, true);
+    uint8_t *decoded_bits = d_decoder.decode(&ofdm, &frame, d_deinterleaved);
 
 	return parse_signal(decoded_bits);
 }
 
 void
 frame_equalizer_impl::deinterleave(uint8_t *rx_bits) {
-	for(int i = 0; i < 48; i++) {
+    //interleave(d_deinterleaved, rx_bits, 
+    for(int i = 0; i < 48; i++) {
 		d_deinterleaved[i] = rx_bits[interleaver_pattern[i]];
 	}
 }

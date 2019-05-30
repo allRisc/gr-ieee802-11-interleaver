@@ -386,7 +386,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>10</value>
+      <value>1</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -564,7 +564,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1000</value>
+      <value>-1</value>
     </param>
   </block>
   <block>
@@ -812,7 +812,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>True</value>
     </param>
     <param>
       <key>file</key>
@@ -888,6 +888,61 @@
     <param>
       <key>minoutbuf</key>
       <value>100000</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_null_source</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>bus_conns</key>
+      <value>[[0,],]</value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(816, 656)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_null_source_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>num_outputs</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
     </param>
     <param>
       <key>vlen</key>
@@ -1022,7 +1077,7 @@ class Send_Message_Block(gr.basic_block):  # other base classes are basic_block,
     </param>
     <param>
       <key>debug</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1285,7 +1340,7 @@ class Recv_Message_Block(gr.basic_block):  # other base classes are basic_block,
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -3760,7 +3815,7 @@ class Recv_Message_Block(gr.basic_block):  # other base classes are basic_block,
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -3981,6 +4036,12 @@ class Recv_Message_Block(gr.basic_block):  # other base classes are basic_block,
   <connection>
     <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
     <sink_block_id>foo_packet_pad2_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_null_source_0</source_block_id>
+    <sink_block_id>wifi_phy_hier_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

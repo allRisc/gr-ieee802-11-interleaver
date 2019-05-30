@@ -37,7 +37,6 @@ if(NOT WIN32)
     #http://gcc.gnu.org/wiki/Visibility
     add_definitions(-fvisibility=hidden)
     add_definitions(-std=c++0x)
-    add_definitions(-msse2)
 endif()
 
 ########################################################################
@@ -94,11 +93,8 @@ if(NOT CPPUNIT_FOUND)
 endif()
 
 find_package(Log4cpp)
-if (LOG4CPP_FOUND)
-    message(STATUS "Found LOG4CPP: ${LOG4CPP_LIBRARIES}")
-    add_definitions("-DGR_IEEE80211_LOG4CPP")
-else ()
-    message(STATUS "LOG4CPP not found (not required).")
+if(NOT LOG4CPP_FOUND)
+    message(FATAL_ERROR "LOG4CPP required to compile ieee802-11")
 endif ()
 
 find_package(SWIG)

@@ -1,0 +1,40 @@
+if (ofdm.n_bpsc == 1) 
+{
+	int temp[] = {25};
+	for (i = 0; i < ofdm.n_bpsc; i++)
+	{
+		dscShiftArr[i] = temp[i];
+	}
+}
+if (ofdm.n_bpsc == 2) 
+{
+	int temp[] = {25, 2};
+	for (i = 0; i < ofdm.n_bpsc; i++)
+	{
+		dscShiftArr[i] = temp[i];
+	}
+}
+if (ofdm.n_bpsc == 4) 
+{
+	int temp[] = {2, 41, 16, 25};
+	for (i = 0; i < ofdm.n_bpsc; i++)
+	{
+		dscShiftArr[i] = temp[i];
+	}
+}
+if (ofdm.n_bpsc == 6) 
+{
+	int temp[] = {26, 7, 41, 16, 25, 2};
+	for (i = 0; i < ofdm.n_bpsc; i++)
+	{
+		dscShiftArr[i] = temp[i];
+	}
+}
+if (ofdm.n_bpsc == 8) 
+{
+	int temp[] = {7, 26, 2, 16, 25, 15, 41, 44};
+	for (i = 0; i < ofdm.n_bpsc; i++)
+	{
+		dscShiftArr[i] = temp[i];
+	}
+}
