@@ -209,21 +209,88 @@ void interleave(const char *in, char *out, frame_param &frame, ofdm_param &ofdm,
 	int first[n_cbps];
 	int second[n_cbps];
 	int s = std::max(ofdm.n_bpsc / 2, 1);
+    
+    int offset, shift;
+    int i, j, k;
+	int temp, newDsc;
+	uint8_t drgbBuffer[8];
+    int num_subcarriers = 48;
+	double tempDouble;
+	int dscShiftArr[ofdm.n_bpsc];
+	int shiftArr[ofdm.n_cbps] = {0};
 
-	for(int j = 0; j < n_cbps; j++) {
-		first[j] = s * (j / s) + ((j + int(floor(16.0 * j / n_cbps))) % s);
+    if (ofdm.n_bpsc == 1)
+    {
+	    int temp[] = {25};
+	    for (i = 0; i < ofdm.n_bpsc; i++)
+	    {
+		    dscShiftArr[i] = temp[i];
+	    }
+    }
+    if (ofdm.n_bpsc == 2)
+    {
+	    int temp[] = {25, 11};
+	    for (i = 0; i < ofdm.n_bpsc; i++)
+	    {
+		    dscShiftArr[i] = temp[i];
+	    }
+    }
+    if (ofdm.n_bpsc == 4)
+    {
+	    int temp[] = {25, 33, 6, 11};
+	    for (i = 0; i < ofdm.n_bpsc; i++)
+	    {
+		    dscShiftArr[i] = temp[i];
+	    }
+    }
+    if (ofdm.n_bpsc == 6)
+    {
+	    int temp[] = {6, 25, 11, 1, 0, 33};
+	    for (i = 0; i < ofdm.n_bpsc; i++)
+	    {
+		    dscShiftArr[i] = temp[i];
+	    }
+    }
+    if (ofdm.n_bpsc == 8)
+    {
+	    int temp[] = {11, 9, 17, 1, 33, 6, 25, 0};
+	    for (i = 0; i < ofdm.n_bpsc; i++)
+	    {
+		    dscShiftArr[i] = temp[i];
+	    }
+    }
+    //Test this
+    // Determine the shift arr
+	k = 1;
+    for (i = 0; i < num_subcarriers; i++)
+	{
+		for (j = 0; j < ofdm.n_bpsc; j++)
+		{
+			// Shift the bit by the number of 
+			newDsc = (i + dscShiftArr[j]) % num_subcarriers;
+            //std::cout << "New DSC" << newDsc << std::endl;
+			temp = newDsc * ofdm.n_bpsc;
+			while (shiftArr[temp] != 0)
+			{
+				temp++;
+			}
+			shiftArr[temp] = k;
+            k++;
+		}
 	}
 
-	for(int i = 0; i < n_cbps; i++) {
-		second[i] = 16 * i - (n_cbps - 1) * int(floor(16.0 * i / n_cbps));
-	}
-
-	for(int i = 0; i < frame.n_sym; i++) {
-		for(int k = 0; k < n_cbps; k++) {
-			if(reverse) {
-				out[i * n_cbps + second[first[k]]] = in[i * n_cbps + k];
-			} else {
-				out[i * n_cbps + k] = in[i * n_cbps + second[first[k]]];
+    for(int i = 0; i < frame.n_sym; i++) {
+		for (j = 0; j < ofdm.n_cbps; j++)
+		{
+            offset = i * ofdm.n_cbps;
+            shift = shiftArr[j] - 1;
+			if (reverse)
+			{
+				out[offset + shift] = in[offset + j];
+			}
+			else
+			{
+				out[offset + j] = in[offset + shift];
 			}
 		}
 	}
